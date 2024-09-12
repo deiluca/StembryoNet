@@ -2,6 +2,11 @@
 
 This repository allows the reproduction of the results in the paper "AI-based approach to dissect the variability of mouse stem cell-derived embryo models".
 
+<figure>
+  <img src="stembryonet_architecture.png" alt="Alt text">
+  <figcaption>Architecture of the StembryoNet model.</figcaption>
+</figure>
+
 ### Prerequisites
 Make sure you have Python 3.9.16 installed on your system. You can download Python [here](https://www.python.org/downloads/).
 
@@ -31,6 +36,7 @@ This will create a new folder called venv in your project directory.
 ```
 source venv/bin/activate
 ```
+
 
 # 4. Install dependencies
 With the virtual environment activated, install the required dependencies from the requirements.txt file:
