@@ -2,10 +2,6 @@
 
 This repository allows the reproduction of the results in the paper "AI-based approach to dissect the variability of mouse stem cell-derived embryo models".
 
-<figure>
-  <img src="stembryonet_architecture.png" alt="Alt text">
-  <figcaption>Architecture of the StembryoNet model.</figcaption>
-</figure>
 
 ### Prerequisites
 Make sure you have Python 3.9.16 installed on your system. You can download Python [here](https://www.python.org/downloads/).
