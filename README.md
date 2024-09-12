@@ -56,9 +56,5 @@ For creation of datasets use scripts in scripts/dataset_creation
 Use scripts in scripts/model_training and scripts/inference
 
 
-blabla
-
-
-
 
 
