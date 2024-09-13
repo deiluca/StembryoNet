@@ -235,8 +235,6 @@ class KineticsDataModule(pl.LightningDataModule):
                         UniformTemporalSubsample(self.unif_temp_sub),### subsamples 8 images from T in range 0-153, so it will select at the beginning, middle and end, so probably day 0, 20, 40, 60, 80, 100, 120, 140 (these are 8)
                         Lambda(lambda x: x / 255.0) if self.div255 else IdentityTransform(),
                         Normalize((0.45, 0.45, 0.45), (0.225, 0.225, 0.225)) if self.norm else IdentityTransform(),
-                        # RandomShortSideScale(min_size=256, max_size=320),
-                        # RandomCrop(244),
                         RandomHorizontalFlip(p=0.5),
                     ]
                     ),
@@ -316,7 +314,6 @@ class VideoClassificationLightningModule(pl.LightningModule):
                         activation=nn.ReLU
             )
         else:
-            # self.model = torch.load("/home/iai/oc9627/MVIT_B_16x4.pyth")
             self.model = torch.hub.load("facebookresearch/pytorchvideo", model='mvit_base_16x4', pretrained=True)
             self.model.head.proj = nn.Linear(in_features=768, out_features=self.num_classes, bias=True)     
 
@@ -327,9 +324,7 @@ class VideoClassificationLightningModule(pl.LightningModule):
         self.acc = Accuracy(
             task="binary" if num_classes == 1 else "multiclass", num_classes=self.num_classes
         )
-        # self.prcurve = PrecisionRecallCurve(task='multiclass', num_classes=self.num_classes, average=None)
 
-        # self.multacc = Accuracy(task='multiclass', num_classes=num_classes, average=None)
         self.multacc = Accuracy(task='binary' if num_classes == 1 else "multiclass", num_classes=num_classes)
 
         
@@ -337,28 +332,10 @@ class VideoClassificationLightningModule(pl.LightningModule):
         self.class_idx['abnormal'] = 0
         self.class_idx['normal'] = 1
 
-        # self.df = self.get_test_gt()
-
         self.test_filenames, self.test_predictions, self.test_targets = [], [], []
 
-    
     def forward(self, x):
         return self.model(x)
-    
-    def get_prauc(self, prcurve):
-                # Calculate AUC for each class
-        class_auc_list = []
-        for precision, recall, thresholds in zip(prcurve[0], prcurve[1], prcurve[2]):
-            mask = ~torch.isnan(recall)
-            # Check if there are enough points to compute AUC
-            if len(mask.nonzero()) >= 2:
-                class_auc = auc(recall[mask].cpu().numpy(), precision[mask].cpu().numpy())
-                class_auc_list.append(class_auc)
-            else:
-                # print("Not enough points to compute AUC for this class.")
-                class_auc_list.append(np.nan)
-
-        return class_auc_list
     
     def _step(self, batch, mode):
         x = batch["video"]
@@ -371,9 +348,7 @@ class VideoClassificationLightningModule(pl.LightningModule):
 
         loss = self.loss_fn(preds, y)
         acc = self.acc(preds, y)
-        multacc = self.multacc(preds, y)
-        # prcurve = self.prcurve(preds, y)
-        # prauc = self.get_prauc(prcurve)
+
         self.log(
             f"{mode}/Loss", loss, on_epoch=True, prog_bar=True, logger=True
         )
@@ -392,7 +367,6 @@ class VideoClassificationLightningModule(pl.LightningModule):
 
 
     def training_step(self, batch, batch_idx):
-        # print('using lr: ', self.lr)
         # The model expects a video tensor of shape (B, C, T, H, W), which is the
         # format provided by the dataset
         loss = self._step(batch, mode='Train')
@@ -512,7 +486,7 @@ if __name__ == "__main__":
         "-uts",
         "--unif_temp_sub",
         type=int,
-        default=8,
+        default=16,
     )
     parser.add_argument(
         "-b",
