@@ -57,6 +57,9 @@ For creation of datasets use scripts in scripts/dataset_creation
 # 4. Model training
 Use scripts in scripts/model_training and scripts/inference
 
+# 4. Model comparison
+Use scripts in scripts/model_comparison
+
 
 
 
