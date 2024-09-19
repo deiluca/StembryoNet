@@ -4,7 +4,7 @@ This repository allows the reproduction of the results in the paper "AI-based ap
 
 
 ### Prerequisites
-Make sure you have Python 3.9.16 installed on your system. You can download Python [here](https://www.python.org/downloads/).
+Make sure you have Python 3.9.16 installed on your system. This codebase has been developed on a linux machine and a HPC cluster running with the slurm workload manager.
 
 ### Optional: Installing virtualenv
 To create an isolated Python environment, it's recommended to use virtualenv. Install it using:
@@ -52,13 +52,14 @@ This repository allows the creation of datasets (5-times repeated 5-fold cross v
     - fluorescence z-sum: fluorescence z-sum projection images, use dataset_info.csv column 'if_zsum' and channels 0, 1, 2
     - bf-in-focus: brightfield in-focus images, use dataset_info.csv column 'bf_f_infocus' and channel 0
 
-For creation of datasets use scripts in scripts/dataset_creation
+For creation of datasets use scripts in [scripts/dataset_creation](scripts/dataset_creation)
 
 # 4. Model training
-Use scripts in scripts/model_training and scripts/inference
+Use scripts in [scripts/model_training](scripts/model_training) and [scripts/inference](scripts/inference)
 
 # 4. Model comparison
-Use scripts in scripts/model_comparison
+Use scripts in [scripts/model_comparison](scripts/model_comparison)
+
 
 
 
