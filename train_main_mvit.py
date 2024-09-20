@@ -8,19 +8,9 @@ warnings.filterwarnings("ignore")
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import torchvision.models as models
-from torch.optim import SGD, Adam
-from torch.utils.data import DataLoader
-from torchmetrics import Accuracy, MatthewsCorrCoef, PrecisionRecallCurve
-# from torcheval.metrics import MulticlassAUPRC, MulticlassAccuracy, 
-from torchvision import transforms
-from torchvision.datasets import ImageFolder
+from torchmetrics import Accuracy
 from pytorch_lightning.loggers import TensorBoardLogger
 
-import sklearn
-
-import datetime
 import pandas as pd
 import numpy as np
 
@@ -29,16 +19,12 @@ from sklearn.metrics import auc
 from pytorchvideo.transforms import (
     ApplyTransformToKey,
     Normalize,
-    RandomShortSideScale,
-    RemoveKey,
-    ShortSideScale,
     UniformTemporalSubsample
 )
 
 from torchvision.transforms import (
     Compose,
     Lambda,
-    RandomCrop,
     Resize,
     RandomHorizontalFlip
 )
@@ -53,11 +39,9 @@ from pytorchvideo.data import Kinetics
 from collections import Counter
 from os.path import join as opj
 from pytorch_lightning import seed_everything
-from pytorch_lightning.callbacks import DeviceStatsMonitor
 import random
 import PIL
 import torchvision
-# torch.use_deterministic_algorithms(True, warn_only=True) # https://github.com/pytorch/pytorch/issues/89492
 
 class IdentityTransform:
     def __call__(self, sample):

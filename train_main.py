@@ -12,16 +12,12 @@ import torch.nn.functional as F
 import torchvision.models as models
 from torch.optim import SGD, Adam
 from torch.utils.data import DataLoader
-from torchmetrics import Accuracy, MatthewsCorrCoef, PrecisionRecallCurve
+from torchmetrics import Accuracy
 # from torcheval.metrics import MulticlassAUPRC, MulticlassAccuracy, 
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
 from pytorch_lightning.loggers import TensorBoardLogger
 
-import sklearn
-# from utils import plot_confusion_matrix, plot_to_image
-
-import datetime
 import pandas as pd
 import numpy as np
 from pytorch_lightning import seed_everything
