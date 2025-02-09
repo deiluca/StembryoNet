@@ -1,5 +1,5 @@
 logs
 sbatch_files
-run_all_sbatch.sh
 __pycache__
 *.ckpt
+*.png

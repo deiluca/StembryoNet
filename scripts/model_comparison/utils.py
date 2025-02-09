@@ -7,7 +7,10 @@ from os.path import join as opj
 from sklearn.metrics import f1_score
 
 import math
+import sys
 
+sys.path.append('/home/iai/oc9627/StembryoNet/scripts/dataset_creation')
+from constants import NR_CVS, NR_SPLITS
 
 def sigmoid(x):
     """
@@ -81,8 +84,8 @@ def get_stembryonet_threshold(base_d, outfile='bla.csv', inf_dir='fasfd'):
     cvs, splits, f1s, thresholds_f1 = [], [], [], []
     
     # Loop through cross-validation and splits
-    for cv in range(5):
-        for split in range(5):
+    for cv in range(NR_CVS):
+        for split in range(NR_SPLITS):
             # Construct the file path to the outputs
             d = opj(base_d, f'cv{cv}_split{split}/{inf_dir}/outputs.csv')
             x = pd.read_csv(d)
@@ -142,8 +145,8 @@ def get_model_performance(base_d, model_name, target_col='target', stembryonet=F
         df_thresholds = pd.read_csv(threshold_file)
 
     # Loop through cross-validation and splits
-    for cv in range(5):
-        for split in range(5):
+    for cv in range(NR_CVS):
+        for split in range(NR_SPLITS):
             # Construct the file path based on whether it is StembryoNet or not
             if stembryonet:
                 d = opj(base_d, f'cv{cv}_split{split}/{inf_dir}/outputs.csv')

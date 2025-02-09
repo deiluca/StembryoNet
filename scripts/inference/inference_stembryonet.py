@@ -2,7 +2,7 @@ import os
 from os.path import join as opj
 import sys
 sys.path.append('/home/iai/oc9627/StembryoNet/scripts/dataset_creation')  # Add the custom script path for importing local modules
-from constants import OUTDIR_ROOT, NR_CVS, NR_SPLITS, SBATCH_DIR  # Import constants for output directories and cross-validation
+from constants import OUTDIR_ROOT, NR_CVS, NR_SPLITS, SBATCH_DIR, DATA_NAME  # Import constants for output directories and cross-validation
 
 # SLURM job submission script template for running jobs on the cluster
 slurm_backbone = '''#!/bin/bash
@@ -31,11 +31,11 @@ wd = 1e-4                 # Weight decay for regularization
 use_autofind_lr = False   # Whether to automatically find the learning rate
 tmin, tmax = 111, 153     # Time range for inference data
 
-inputdir = opj(OUTDIR_ROOT, 'stembryonet_fluorinfocus/results/stembryonet_18_2d_epochs200_lr-0.001_bs16_fluorinfocus') 
+inputdir = opj(OUTDIR_ROOT, f'stembryonet_{DATA_NAME}/results/stembryonet_{DATA_NAME}') 
 
 # Loop over test modes ('val' for validation and 'test' for testing)
 for test_mode in ['val', 'test']:
-    image_dir = opj(OUTDIR_ROOT, 'stembryonet_inference_fluorinfocus') 
+    image_dir = opj(OUTDIR_ROOT, f'stembryonet_inference_{DATA_NAME}') 
 
     for cv in range(NR_CVS):  # Loop over cross-validation splits
         for split in range(NR_SPLITS):  # Loop over dataset splits
@@ -80,10 +80,12 @@ for test_mode in ['val', 'test']:
             # Add the flag for automatic learning rate finding if enabled
             if use_autofind_lr:
                 cmd += '\\\n --use_autofindlr'
-
-            # Print the combined SLURM script and training command
-            print(slurm_backbone + cmd)
             
             # Write the SLURM batch script to a file for submission
-            with open(opj(SBATCH_DIR, sbatch_name+f'cv{cv}_split{split}.sh'), "w") as f:
+            file_name = opj(SBATCH_DIR, sbatch_name+f'cv{cv}_split{split}.sh')
+
+            with open(file_name, "w") as f:
                 f.write(slurm_backbone + cmd)
+            
+            # Print the constructed command for debugging purposes
+            print(f"SLURM script written: {file_name}")

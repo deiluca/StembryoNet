@@ -6,6 +6,7 @@ import skimage.io as skio
 import tifffile as tiff
 import sys
 import cv2
+from constants import DATA_ROOT_DIR
 
 
 def generate_sbatch_file(SBATCH_DIR, sbatchfilename, slurm_backbone, cmd):
@@ -123,7 +124,7 @@ def save_imgs_selected_general5cvs_(df, outdir, t_col='Uniformly_sampled_timepoi
         outdir2 = opj(outdir, row[label_col])
         os.makedirs(outdir2, exist_ok=True)
         embryo_id = row[id_col]
-        img_ = skio.imread(row[img_col].replace('/mnt/lsdf_iai-aida/Daten_Deininger/', '/lsdf/kit/iai/projects/iai-aida/Daten_Deininger/'))
+        img_ = skio.imread(opj(DATA_ROOT_DIR, row[img_col]))
         if save_type=='img':
             if t_col == 'Uniformly_sampled_timepoint':
                 t = int(row[t_col]) - 1 - t_minus  # Paolo used 1-indexing
