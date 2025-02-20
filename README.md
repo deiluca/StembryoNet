@@ -1,6 +1,6 @@
 # AI-based approach to dissect the variability of mouse stem cell-derived embryo models
 
-This repository allows the reproduction of the results in the paper "AI-based approach to dissect the variability of mouse stem cell-derived embryo models".
+This repository allows the reproduction of the results in the paper [AI-based approach to dissect the variability of mouse stem cell-derived embryo models](https://www.nature.com/articles/s41467-025-56908-5).
 
 
 ### Prerequisites
@@ -124,6 +124,28 @@ ResNet inference is integrated into the training process, eliminating the need f
 ```python
 # Generate boxplot of model accuracies for ResNet, MViT, and StembryoNet
 python scripts/model_comparison/visualize_model_comparison.py
+```
+
+**Cite**
+
+If you find this useful, please consider citing our work:
+
+[1] Caldarelli, P., Deininger, L., Zhao, S. et al. AI-based approach to dissect the variability of mouse stem cell-derived embryo models. Nat Commun 16, 1772 (2025). https://doi.org/10.1038/s41467-025-56908-5
+
+``` 
+@article{CaldarelliDeininger2025,
+  title = {AI-based approach to dissect the variability of mouse stem cell-derived embryo models},
+  volume = {16},
+  ISSN = {2041-1723},
+  url = {http://dx.doi.org/10.1038/s41467-025-56908-5},
+  DOI = {10.1038/s41467-025-56908-5},
+  number = {1},
+  journal = {Nature Communications},
+  publisher = {Springer Science and Business Media LLC},
+  author = {Caldarelli,  Paolo and Deininger,  Luca and Zhao,  Shi and Panda,  Pallavi and Yang,  Changhuei and Mikut,  Ralf and Zernicka-Goetz,  Magdalena},
+  year = {2025},
+  month = feb 
+}
 ```
 
 
